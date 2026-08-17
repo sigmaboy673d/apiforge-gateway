@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/v1/messages", "destination": "/api/messages" },
+    { "source": "/v1/chat/completions", "destination": "/api/completions" },
+    { "source": "/v1/models", "destination": "/api/models" },
+    { "source": "/v1/health", "destination": "/api/health" },
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/api/overview", "destination": "/api/overview" },
+    { "source": "/api/test_upstream", "destination": "/api/test_upstream" },
+    { "source": "/api/keys", "destination": "/api/keys" },
+    { "source": "/api/user", "destination": "/api/user" },
+    { "source": "/api/credits", "destination": "/api/credits" },
+    { "source": "/api/debug", "destination": "/api/debug" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS, DELETE" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization, x-api-key, anthropic-version, anthropic-beta, x-user-id" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=(), payment=()" }
+      ]
+    }
+  ]
+}

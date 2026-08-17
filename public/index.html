@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApiForge — AI API Platform for Developers</title>
+  <meta name="description" content="ApiForge provides ultra-reliable, high-throughput unified AI model routing, API keys, usage analytics, and developer infrastructure.">
+  <link rel="icon" type="image/png" href="forgeapi-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="forge-app">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- ====================================================================
+         SIDEBAR (COMPACT, PROFESSIONAL DEVELOPER SAAS)
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-logo-svg-wrap">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="forgeLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#5bfcc4"/>
+                  <stop offset="50%" stop-color="#f593e4"/>
+                  <stop offset="100%" stop-color="#71a4f0"/>
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="28" height="28" rx="8" fill="rgba(91,252,196,0.06)" stroke="url(#forgeLogoGrad)" stroke-width="1.8"/>
+              <path d="M9 11H23M9 16H19M9 21H15" stroke="url(#forgeLogoGrad)" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="21" cy="21" r="3.2" fill="#5bfcc4" filter="drop-shadow(0 0 6px #5bfcc4)"/>
+            </svg>
+          </div>
+          <span class="brand-name">ApiForge</span>
+        </div>
+        <button class="mobile-sidebar-close-btn" id="btn-close-mobile-sidebar" aria-label="Close navigation">&times;</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <a href="#" class="nav-item active" data-view="overview">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span>Overview</span>
+          </a>
+          <a href="#" class="nav-item" data-view="models">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18M12 8a4 4 0 1 0 0 8"/></svg>
+            <span>Models</span>
+          </a>
+          <a href="#" class="nav-item" data-view="apikeys">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M21 3l-6 6M15 9l2 2M18 6l2 2"/></svg>
+            <span>API Keys</span>
+          </a>
+          <a href="#" class="nav-item" data-view="usage">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span>Usage</span>
+          </a>
+          <a href="#" class="nav-item" data-view="requests">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Requests</span>
+          </a>
+          <a href="#" class="nav-item" data-view="credits">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span>Credits</span>
+          </a>
+          <a href="#" class="nav-item" data-view="docs">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span>Documentation</span>
+          </a>
+        </div>
+
+        <div class="nav-divider"></div>
+
+        <div class="nav-section">
+          <span class="nav-section-title">WORKSPACE</span>
+          <a href="#" class="nav-item" data-view="settings">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+          </a>
+          <a href="#" class="nav-item" data-view="team">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Creators</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Sidebar Bottom Profile: Discord Creator Sakura -->
+      <div class="sidebar-footer">
+        <div class="workspace-selector" id="btn-discord-profile-trigger" title="View Sakura's Discord Profile">
+          <div class="avatar-status-wrap">
+            <img src="assets/profile_avatar.jpg" alt="Sakura" class="user-avatar-img">
+            <span class="status-indicator-idle" title="Idle">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="#f1c40f"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+            </span>
+          </div>
+          <div class="user-details">
+            <span class="user-name" id="sidebar-username">Sakura</span>
+            <span class="user-email" id="sidebar-email">king074035</span>
+          </div>
+          <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN VIEWPORT
+         ==================================================================== -->
+    <main class="main-viewport">
+
+      <!-- Clean Mobile Top Navigation Bar (Hamburger Menu to Access Categories) -->
+      <header class="mobile-topbar" id="mobile-topbar">
+        <div class="mobile-brand">
+          <div class="brand-logo-svg-wrap" style="width:24px; height:24px;">
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="28" height="28" rx="8" fill="rgba(91,252,196,0.06)" stroke="url(#forgeLogoGrad)" stroke-width="1.8"/>
+              <path d="M9 11H23M9 16H19M9 21H15" stroke="url(#forgeLogoGrad)" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="21" cy="21" r="3.2" fill="#5bfcc4" filter="drop-shadow(0 0 6px #5bfcc4)"/>
+            </svg>
+          </div>
+          <span class="brand-name" style="font-size:1.1rem; font-weight:800; letter-spacing:0.02em;">ApiForge</span>
+        </div>
+        <button class="mobile-menu-toggle-btn" id="btn-mobile-menu-toggle" aria-label="Open navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           1. VIEW: OVERVIEW
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view active" id="view-overview">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Overview</h1>
+            <p class="view-subtitle">Monitor your ForgeAPI usage, credits, and model activity.</p>
+          </div>
+          <div class="header-controls">
+            <button class="btn-secondary" id="btn-refresh-overview">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Overview Top Grid: Uiverse.io Wallet + 4 Core Metrics -->
+        <div class="overview-top-grid">
+          <!-- Clean Forge Wallet Card with Discord Top-Up -->
+          <div class="card uiverse-wallet-card" id="uiverse-wallet-container">
+            <div class="wallet-header">
+              <div class="wallet-info">
+                <div class="wallet-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
+                    <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
+                  </svg>
+                </div>
+                <div class="wallet-text">
+                  <p class="wallet-title">Forge Wallet</p>
+                  <p class="wallet-balance" id="overview-balance-display">€1.00</p>
+                </div>
+              </div>
+              <span class="badge-status-success font-mono" style="font-size:0.72rem; padding:4px 10px;">Active Balance</span>
+            </div>
+
+            <!-- Discord Top-Up Action -->
+            <div class="wallet-discord-container" style="display:flex; flex-direction:column; gap:10px; padding-top:6px;">
+              <span style="font-size:0.82rem; color:var(--text-secondary); line-height:1.4;">
+                To top up balance or purchase extra credits, contact the Owner on Discord:
+              </span>
+              <!-- From Uiverse.io by TreepDeep --> 
+              <a href="https://discord.gg/zbeZ3zh4z" target="_blank" rel="noopener noreferrer" class="button x">
+                <svg
+                  style="color: white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-discord"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"
+                    fill="white"
+                  ></path>
+                </svg>
+                Continue with Discord
+              </a>
+            </div>
+          </div>
+
+          <!-- 4 Core Real Metrics -->
+          <div class="metrics-quad-grid">
+            <div class="card metric-stat-card">
+              <span class="card-label">Requests</span>
+              <div class="metric-val" id="metric-requests-count">0</div>
+              <span class="metric-trend text-muted" id="metric-requests-trend">Live count</span>
+            </div>
+            <div class="card metric-stat-card">
+              <span class="card-label">Tokens</span>
+              <div class="metric-val" id="metric-tokens-count">0</div>
+              <span class="metric-trend text-muted">Total processed</span>
+            </div>
+            <div class="card metric-stat-card">
+              <span class="card-label">Spend</span>
+              <div class="metric-val" id="metric-spend-count">$0.0000</div>
+              <span class="metric-trend text-muted">Billed tokens</span>
+            </div>
+            <div class="card metric-stat-card">
+              <span class="card-label">Avg. latency</span>
+              <div class="metric-val" id="metric-latency-count">0.00s</div>
+              <span class="metric-trend text-muted">Gateway time</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- API Usage Chart -->
+        <div class="card chart-section-card">
+          <div class="chart-header-row">
+            <div>
+              <h2 class="card-title">API usage</h2>
+              <span class="card-sub-info">Compared with previous period</span>
+            </div>
+            <div class="chart-tab-pills">
+              <button class="chart-tab active" data-chart-tab="requests">Requests</button>
+              <button class="chart-tab" data-chart-tab="tokens">Tokens</button>
+              <button class="chart-tab" data-chart-tab="cost">Cost</button>
+            </div>
+          </div>
+
+          <div class="chart-svg-container">
+            <svg class="chart-svg" viewBox="0 0 700 130" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5bfcc4" stop-opacity="0.35"/>
+                  <stop offset="60%" stop-color="#f593e4" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#71a4f0" stop-opacity="0.0"/>
+                </linearGradient>
+                <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#5bfcc4"/>
+                  <stop offset="50%" stop-color="#f593e4"/>
+                  <stop offset="100%" stop-color="#71a4f0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="30" x2="700" y2="30" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+              <line x1="0" y1="70" x2="700" y2="70" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+              <line x1="0" y1="110" x2="700" y2="110" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+              <path d="M0,95 C80,85 140,40 220,65 C300,90 380,25 460,45 C540,65 620,20 700,35 L700,130 L0,130 Z" fill="url(#chartGradient)"/>
+              <path d="M0,95 C80,85 140,40 220,65 C300,90 380,25 460,45 C540,65 620,20 700,35" fill="none" stroke="url(#lineGradient)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="220" cy="65" r="4" fill="#5bfcc4" filter="drop-shadow(0 0 6px #5bfcc4)"/>
+              <circle cx="460" cy="45" r="4" fill="#f593e4" filter="drop-shadow(0 0 6px #f593e4)"/>
+              <circle cx="700" cy="35" r="4" fill="#71a4f0" filter="drop-shadow(0 0 6px #71a4f0)"/>
+            </svg>
+            <div class="chart-x-axis-labels">
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+              <span>Sun (Today)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Requests Table -->
+        <div class="card table-section-card">
+          <div class="table-header-row">
+            <h2 class="card-title">Recent requests</h2>
+            <button class="btn-text-sm" data-view="requests">View all requests →</button>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Model</th>
+                  <th>Tokens</th>
+                  <th>Latency</th>
+                  <th>Cost</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="overview-requests-tbody">
+                <tr>
+                  <td class="font-mono text-muted">2 mins ago</td>
+                  <td><span class="badge-model">gpt-5.6-sol</span></td>
+                  <td class="font-mono">1,420</td>
+                  <td class="font-mono">1.18s</td>
+                  <td class="font-mono">$0.0028</td>
+                  <td><span class="badge-status-available">Success</span></td>
+                </tr>
+                <tr>
+                  <td class="font-mono text-muted">8 mins ago</td>
+                  <td><span class="badge-model">claude-opus-4-8</span></td>
+                  <td class="font-mono">3,890</td>
+                  <td class="font-mono">1.84s</td>
+                  <td class="font-mono">$0.0078</td>
+                  <td><span class="badge-status-available">Success</span></td>
+                </tr>
+                <tr>
+                  <td class="font-mono text-muted">24 mins ago</td>
+                  <td><span class="badge-model">claude-opus-5</span></td>
+                  <td class="font-mono">840</td>
+                  <td class="font-mono">0.94s</td>
+                  <td class="font-mono">$0.0016</td>
+                  <td><span class="badge-status-available">Success</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           2. VIEW: MODELS
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-models" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Models</h1>
+            <p class="view-subtitle">Browse available ForgeAPI models and compare pricing.</p>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="models-filter-bar">
+          <div class="search-input-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="models-search-input" class="search-input" placeholder="Search models by name or provider...">
+          </div>
+          <select class="control-select" id="models-provider-filter">
+            <option value="all">All Providers</option>
+            <option value="openai">OpenAI Compatible</option>
+            <option value="anthropic">Anthropic</option>
+          </select>
+          <select class="control-select" id="models-type-filter">
+            <option value="all">All Types</option>
+            <option value="chat">Chat</option>
+            <option value="reasoning">Reasoning</option>
+          </select>
+        </div>
+
+        <!-- Models Table -->
+        <div class="card table-section-card">
+          <div class="table-container">
+            <table class="data-table" id="models-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Provider</th>
+                  <th>Context window</th>
+                  <th>Input price</th>
+                  <th>Output price</th>
+                  <th>Availability</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="models-table-tbody">
+                <tr>
+                  <td><span class="badge-model">gpt-5.6-sol</span></td>
+                  <td><span class="badge-provider">OpenAI Compatible</span></td>
+                  <td><span class="badge-type">128k tokens</span></td>
+                  <td class="font-mono text-cyan">$0.80 / 1M</td>
+                  <td class="font-mono text-cyan">$2.40 / 1M</td>
+                  <td><span class="badge-status-available">Available</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-secondary-sm btn-use-model" data-model="gpt-5.6-sol">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 5px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      Use in API
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="badge-model">claude-opus-4-8</span></td>
+                  <td><span class="badge-provider">Anthropic</span></td>
+                  <td><span class="badge-type">200k tokens</span></td>
+                  <td class="font-mono text-cyan">$1.50 / 1M</td>
+                  <td class="font-mono text-cyan">$4.50 / 1M</td>
+                  <td><span class="badge-status-available">Available</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-secondary-sm btn-use-model" data-model="claude-opus-4-8">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 5px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      Use in API
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="badge-model">claude-opus-5</span></td>
+                  <td><span class="badge-provider">Anthropic</span></td>
+                  <td><span class="badge-type">200k tokens</span></td>
+                  <td class="font-mono text-cyan">$3.00 / 1M</td>
+                  <td class="font-mono text-cyan">$9.00 / 1M</td>
+                  <td><span class="badge-status-available">Available</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-secondary-sm btn-use-model" data-model="claude-opus-5">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 5px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      Use in API
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           3. VIEW: API KEYS
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-apikeys" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">API Keys</h1>
+            <p class="view-subtitle">Create and manage keys used to authenticate your applications.</p>
+          </div>
+          <button class="btn-primary" id="btn-open-create-key-modal">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Create API key
+          </button>
+        </div>
+
+        <div class="card table-section-card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Key</th>
+                  <th>Created</th>
+                  <th>Last used</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="api-keys-tbody">
+                <tr>
+                  <td><strong>Production Main Key</strong></td>
+                  <td>
+                    <div class="key-mask-cell">
+                      <span class="font-mono text-muted" id="display-key-masked">forge_live_••••••••••••••••••••••••</span>
+                      <button class="btn-icon-inline btn-copy-key" data-copy="forge_live_e3c9uk4fuzqrl7d9gyxu2n9ohczufx8x" title="Copy Key">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="text-muted">Aug 14, 2026</td>
+                  <td class="text-muted font-mono">2 mins ago</td>
+                  <td><span class="badge-status-success">Active</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn-text-danger btn-revoke-key">Revoke</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Integration Helper -->
+        <div class="card helper-section-card">
+          <h3 class="helper-title">Authenticating with ForgeAPI</h3>
+          <p class="helper-desc">Pass your secret key in the Authorization header as a Bearer token:</p>
+          <div class="code-snippet-box">
+            <pre class="font-mono"><code>curl "https://sol-bridge-gateway.vercel.app/v1/chat/completions" \
+  -H "Authorization: Bearer <span class="text-cyan">forge_live_••••••••••••••••</span>" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-5.6-sol", "messages": [{"role": "user", "content": "Hello"}]}'</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           4. VIEW: USAGE
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-usage" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Usage</h1>
+            <p class="view-subtitle">Detailed breakdown of tokens, request volume, and model costs.</p>
+          </div>
+          <div class="header-controls">
+            <select class="control-select">
+              <option>Current billing cycle</option>
+              <option>Last billing cycle</option>
+              <option>Last 30 days</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="usage-overview-grid">
+          <div class="card stat-card">
+            <span class="card-label">Total spent</span>
+            <div class="stat-main-val">$50.18</div>
+            <span class="stat-trend text-muted">Across 3 models</span>
+          </div>
+          <div class="card stat-card">
+            <span class="card-label">Total requests</span>
+            <div class="stat-main-val">12,482</div>
+            <span class="stat-trend text-muted">99.98% success rate</span>
+          </div>
+          <div class="card stat-card">
+            <span class="card-label">Total tokens</span>
+            <div class="stat-main-val">18.4M</div>
+            <span class="stat-trend text-muted">14.2M input / 4.2M output</span>
+          </div>
+        </div>
+
+        <!-- Model Breakdown Table -->
+        <div class="card table-section-card">
+          <div class="table-header-row">
+            <h2 class="card-title">Usage by model</h2>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Requests</th>
+                  <th>Input tokens</th>
+                  <th>Output tokens</th>
+                  <th>Total cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong class="font-mono">gpt-5.6-sol</strong></td>
+                  <td class="font-mono">7,240</td>
+                  <td class="font-mono">8.4M</td>
+                  <td class="font-mono">2.1M</td>
+                  <td class="font-mono">$24.12</td>
+                </tr>
+                <tr>
+                  <td><strong class="font-mono">claude-opus-4-8</strong></td>
+                  <td class="font-mono">3,890</td>
+                  <td class="font-mono">4.2M</td>
+                  <td class="font-mono">1.6M</td>
+                  <td class="font-mono">$18.40</td>
+                </tr>
+                <tr>
+                  <td><strong class="font-mono">claude-opus-5</strong></td>
+                  <td class="font-mono">1,352</td>
+                  <td class="font-mono">1.6M</td>
+                  <td class="font-mono">500k</td>
+                  <td class="font-mono">$7.66</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           5. VIEW: REQUESTS
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-requests" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Requests</h1>
+            <p class="view-subtitle">Inspect recent API calls routed through your ForgeAPI keys.</p>
+          </div>
+          <button class="btn-secondary" id="btn-refresh-requests-view">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Refresh
+          </button>
+        </div>
+
+        <div class="card table-section-card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Timestamp</th>
+                  <th>Model</th>
+                  <th>Tokens</th>
+                  <th>Latency</th>
+                  <th>Cost</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="full-requests-tbody">
+                <tr>
+                  <td class="font-mono text-muted">req_984a12f9</td>
+                  <td class="font-mono text-muted">Just now</td>
+                  <td><span class="badge-model">gpt-5.6-sol</span></td>
+                  <td class="font-mono">1,420</td>
+                  <td class="font-mono">1.18s</td>
+                  <td class="font-mono">$0.0028</td>
+                  <td><span class="badge-status-success">Success (200)</span></td>
+                </tr>
+                <tr>
+                  <td class="font-mono text-muted">req_872c01e3</td>
+                  <td class="font-mono text-muted">5 mins ago</td>
+                  <td><span class="badge-model">claude-opus-4-8</span></td>
+                  <td class="font-mono">3,890</td>
+                  <td class="font-mono">1.84s</td>
+                  <td class="font-mono">$0.0078</td>
+                  <td><span class="badge-status-success">Success (200)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           6. VIEW: CREDITS
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-credits" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Credits</h1>
+            <p class="view-subtitle">Manage your prepaid balance, payment methods, and usage limits.</p>
+          </div>
+        </div>
+
+        <div class="credits-main-grid">
+          <!-- Balance Summary Card -->
+          <div class="card credit-balance-card">
+            <span class="card-label">Current balance</span>
+            <div class="balance-large-number" id="credits-view-balance">$1.00</div>
+            <p class="balance-sub-note">Prepaid credits billed per processed token. Zero monthly minimums.</p>
+            
+            <div class="credits-card-actions">
+              <button class="btn-primary" id="btn-open-add-credits-modal">Add credits</button>
+              <button class="btn-secondary" id="btn-auto-recharge-toggle">Configure auto-recharge</button>
+            </div>
+          </div>
+
+          <!-- Payment Method Card -->
+          <div class="card payment-method-card">
+            <h3 class="card-title">Payment method</h3>
+            <div class="saved-card-row">
+              <div class="card-brand-icon">VISA</div>
+              <div class="card-info-text">
+                <span class="card-number-text">Visa ending in 4321</span>
+                <span class="card-exp-text text-muted">Expires 12/28 · Active Default</span>
+              </div>
+              <button class="btn-secondary-sm" id="btn-update-payment">Manage</button>
+            </div>
+
+            <div class="usage-limits-row">
+              <span class="card-label">Monthly spend limit</span>
+              <span class="limit-value">$500.00 / month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- UIVERSE.IO PRICING PLANS (By Yaya12085) -->
+        <div style="margin-top: 24px;">
+          <div class="table-header-row">
+            <div>
+              <h2 class="card-title">ForgeAPI Subscription & Prepaid Tiers</h2>
+              <span class="text-muted" style="font-size: 0.8rem;">Select a plan or keep pay-as-you-go prepaid credits</span>
+            </div>
+          </div>
+
+          <div class="uiverse-pricing-grid">
+            <!-- Free Plan (€0) -->
+            <div class="card uiverse-pricing-card">
+              <span class="plan-name">Free Starter</span>
+              <p class="price">€0</p>
+              <span class="price-period">Free Tier · 60 req/min</span>
+              <a href="#" class="action" onclick="event.preventDefault(); window.scrollTo({top:0,behavior:'smooth'});">Current Plan</a>
+              <ul class="lists">
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>€1.00 starting credits</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Access all verified models</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Unlimited API keys</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Standard community support</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Starter Plan (€5) -->
+            <div class="card uiverse-pricing-card featured">
+              <span class="badge-plan">POPULAR</span>
+              <span class="plan-name">Starter Pack</span>
+              <p class="price">€5</p>
+              <span class="price-period">Contact on Discord · Instant Setup</span>
+              <a href="https://discord.gg/zbeZ3zh4z" target="_blank" rel="noopener noreferrer" class="action">Buy on Discord (€5)</a>
+              <ul class="lists">
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Priority fast routing (< 1.0s latency)</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>150 requests / minute burst</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Direct Discord Support Ticket</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Instant Credit Top-up</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Enterprise Max Plan (€17) -->
+            <div class="card uiverse-pricing-card">
+              <span class="plan-name">Max Pro</span>
+              <p class="price">€17</p>
+              <span class="price-period">Max Plan · Top Tier</span>
+              <a href="https://discord.gg/zbeZ3zh4z" target="_blank" rel="noopener noreferrer" class="action">Buy on Discord (€17)</a>
+              <ul class="lists">
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>300 requests / minute max limit</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>Dedicated VIP Discord Role & Channel</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>High Concurrency Zero Cooldown</span>
+                </li>
+                <li class="list">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#00f0ff" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                  <span>24/7 Priority SLA Routing</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transaction History Table -->
+        <div class="card table-section-card">
+          <div class="table-header-row">
+            <h2 class="card-title">Transaction history</h2>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Invoice</th>
+                </tr>
+              </thead>
+              <tbody id="transactions-tbody">
+                <tr>
+                  <td class="text-muted font-mono">Aug 10, 2026</td>
+                  <td>Prepaid Credit Top-up</td>
+                  <td class="font-mono text-green">+$50.00</td>
+                  <td><span class="badge-status-success">Paid</span></td>
+                  <td style="text-align: right;"><a href="#" class="inline-link">PDF</a></td>
+                </tr>
+                <tr>
+                  <td class="text-muted font-mono">Jul 12, 2026</td>
+                  <td>Prepaid Credit Top-up</td>
+                  <td class="font-mono text-green">+$50.00</td>
+                  <td><span class="badge-status-success">Paid</span></td>
+                  <td style="text-align: right;"><a href="#" class="inline-link">PDF</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           7. VIEW: DOCUMENTATION
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-docs" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">ForgeAPI Documentation</h1>
+            <p class="view-subtitle">Official developer documentation, SDK setup, and endpoint references.</p>
+          </div>
+        </div>
+
+        <div class="docs-layout">
+          <!-- Table of Contents -->
+          <div class="docs-sidebar-nav">
+            <span class="docs-toc-title">SECTIONS</span>
+            <a href="#doc-getting-started" class="docs-toc-link active">Getting Started</a>
+            <a href="#doc-authentication" class="docs-toc-link">Authentication</a>
+            <a href="#doc-models" class="docs-toc-link">Models</a>
+            <a href="#doc-chat-completions" class="docs-toc-link">Chat Completions</a>
+            <a href="#doc-responses" class="docs-toc-link">Responses</a>
+            <a href="#doc-api-keys" class="docs-toc-link">API Keys</a>
+            <a href="#doc-usage" class="docs-toc-link">Usage</a>
+            <a href="#doc-errors" class="docs-toc-link">Errors</a>
+            <a href="#doc-rate-limits" class="docs-toc-link">Rate Limits</a>
+          </div>
+
+          <!-- Documentation Content Body -->
+          <div class="docs-content-body">
+            <!-- Getting Started -->
+            <article class="doc-article" id="doc-getting-started">
+              <h2 class="doc-h2">Getting Started</h2>
+              <p class="doc-p">ForgeAPI provides an OpenAI and Anthropic compatible interface for accessing high-performance language models through a single unified endpoint.</p>
+              
+              <div class="code-snippet-box">
+                <div class="code-header font-mono">Base URL</div>
+                <pre class="font-mono"><code>https://sol-bridge-gateway.vercel.app/v1</code></pre>
+              </div>
+            </article>
+
+            <!-- Authentication -->
+            <article class="doc-article" id="doc-authentication">
+              <h2 class="doc-h2">Authentication</h2>
+              <p class="doc-p">All requests to ForgeAPI endpoints require an API key passed in the <code>Authorization</code> header using the Bearer schema:</p>
+              
+              <div class="code-snippet-box">
+                <div class="code-header font-mono">Authorization Header</div>
+                <pre class="font-mono"><code>Authorization: Bearer forge_live_••••••••••••••••</code></pre>
+              </div>
+            </article>
+
+            <!-- Chat Completions -->
+            <article class="doc-article" id="doc-chat-completions">
+              <h2 class="doc-h2">Chat Completions</h2>
+              <p class="doc-p">Send chat completion requests via <code>POST /v1/chat/completions</code> or <code>POST /v1/messages</code> with streaming support enabled.</p>
+              
+              <div class="code-snippet-box">
+                <div class="code-header font-mono">cURL Example</div>
+                <pre class="font-mono"><code>curl "https://sol-bridge-gateway.vercel.app/v1/chat/completions" \
+  -H "Authorization: Bearer forge_live_e3c9uk4fuzqrl7d9gyxu2n9ohczufx8x" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-5.6-sol",
+    "messages": [
+      {"role": "user", "content": "Explain binary search in Python."}
+    ],
+    "stream": true
+  }'</code></pre>
+              </div>
+            </article>
+
+            <!-- Errors & Rate Limits -->
+            <article class="doc-article" id="doc-errors">
+              <h2 class="doc-h2">Errors & Rate Limits</h2>
+              <p class="doc-p">If an API key has depleted all credits or hits concurrency thresholds, ForgeAPI returns standard HTTP status codes:</p>
+              <table class="doc-param-table">
+                <tr><td><code>401 Unauthorized</code></td><td>Missing or invalid API key</td></tr>
+                <tr><td><code>402 Payment Required</code></td><td>Insufficient balance — please add credits</td></tr>
+                <tr><td><code>429 Too Many Requests</code></td><td>Rate limit exceeded</td></tr>
+              </table>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           8. VIEW: SETTINGS & CASINO SPIN WHEEL
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-settings" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Settings & Preferences</h1>
+            <p class="view-subtitle">Manage workspace defaults, lock your preferred AI model, and spin the lucky wheel.</p>
+          </div>
+        </div>
+
+        <div class="settings-grid-layout">
+          <!-- Left Column: Account & Forge ID -->
+          <div class="card settings-card">
+            <h3 class="card-title" style="margin-bottom:14px; font-size:1.05rem;">Account Credentials</h3>
+
+            <!-- Your ID for Credits and More (Clean, No Emojis) -->
+            <div class="form-group">
+              <label class="field-label">Your ID for credits and more</label>
+              <div class="input-with-action">
+                <input type="text" class="control-input font-mono" id="input-account-id" placeholder="Generating Unique Forge ID..." readonly style="font-weight:700; color:var(--spacious-mint); background:rgba(91,252,196,0.06); border-color:rgba(91,252,196,0.3);">
+                <button class="btn-secondary-sm" id="btn-copy-account-id" title="Copy ID" style="padding:11px 14px;">Copy</button>
+              </div>
+              <span class="text-muted" style="font-size:0.78rem; margin-top:6px; display:block; line-height:1.4;">
+                Send this ID to the Owner on Discord (<a href="https://discord.gg/zbeZ3zh4z" target="_blank" rel="noopener noreferrer" style="color:var(--spacious-mint); font-weight:600;">discord.gg/zbeZ3zh4z</a>) to get credits added to your account.
+              </span>
+            </div>
+
+            <!-- Custom Username -->
+            <div class="form-group">
+              <label class="field-label">Custom Username</label>
+              <div class="input-with-action">
+                <input type="text" class="control-input" id="input-custom-username" placeholder="Enter your username..." value="Developer">
+                <button class="btn-primary" id="btn-save-username" style="padding:11px 16px; font-size:0.82rem;">Save</button>
+              </div>
+              <span class="text-muted" style="font-size:0.78rem; margin-top:6px; display:block;">
+                Your display username on the FORGE API dashboard.
+              </span>
+            </div>
+
+            <!-- Workspace Platform Name -->
+            <div class="form-group" style="border-top:1px solid var(--border-subtle); padding-top:14px; margin-top:6px;">
+              <label class="field-label">Platform Name</label>
+              <input type="text" class="control-input" value="FORGE API Production" readonly>
+            </div>
+          </div>
+
+          <!-- Right Column: Dedicated API Key & Model Response Lock -->
+          <div class="card settings-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h3 class="card-title" style="font-size:1.05rem;">AI Model Lock & API Key Routing</h3>
+              <span class="badge-status-success font-mono" id="model-lock-badge" style="font-size:0.72rem;">ACTIVE ROUTE</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.45; margin-bottom:14px;">
+              Choose which API key to configure, then choose its dedicated AI model constraint. If "All Models Allowed" is selected, all models work seamlessly:
+            </p>
+
+            <!-- Target API Key Selector -->
+            <div class="form-group" style="margin-bottom:12px;">
+              <label class="field-label">Target API Key</label>
+              <select class="control-select" id="select-target-api-key" style="font-size:0.88rem; font-weight:600;">
+                <option value="global">All API Keys (Global Default)</option>
+              </select>
+            </div>
+
+            <!-- Model Selection -->
+            <div class="form-group">
+              <label class="field-label">Select Model to Route</label>
+              <select class="control-select" id="select-locked-model" style="font-size:0.88rem; font-weight:600;">
+                <option value="all">All Models Allowed (Auto Routing: Claude Opus 5, Claude 4.8, GPT-5.6-Sol)</option>
+                <option value="claude-opus-5">Claude Opus 5 (Ultra Flagship & Deep Coding Only)</option>
+                <option value="gpt-5.6-sol">GPT-5.6-Sol (High-Speed Neural Reasoning Only)</option>
+                <option value="claude-opus-4-8">Claude Opus 4.8 (High Context & Logic Only)</option>
+              </select>
+            </div>
+
+            <div style="margin-top:14px; padding:12px 14px; background:rgba(91,252,196,0.06); border:1px solid rgba(91,252,196,0.25); border-radius:var(--radius-sm);">
+              <div style="font-size:0.82rem; color:#fff; font-weight:700; display:flex; align-items:center; gap:6px;">
+                <span>Active Routing:</span>
+                <span id="locked-model-name-preview" style="color:var(--spacious-mint); font-family:var(--font-mono);">All Models Allowed</span>
+              </div>
+              <span id="locked-model-desc-preview" style="font-size:0.76rem; color:var(--text-muted); display:block; margin-top:4px;">
+                Requests can call Claude Opus 5, Claude 4.8, or GPT-5.6-Sol with zero restrictions.
+              </span>
+            </div>
+
+            <button class="btn-primary" id="btn-save-model-lock" style="width:100%; margin-top:16px; padding:11px 16px;">
+              Apply Route Configuration
+            </button>
+          </div>
+        </div>
+
+        <!-- ═════════════════════════════════════════════════════════════════
+             CASINO SPIN WHEEL (LUCKY WHEEL OF FORTUNE - 3 SPINS DAILY)
+             ═════════════════════════════════════════════════════════════════ -->
+        <div class="card casino-wheel-card" id="casino-wheel-section">
+          <div class="wheel-header">
+            <div>
+              <h2 class="card-title" style="font-size:1.25rem;">Forge Daily Casino Lucky Wheel</h2>
+              <p class="card-sub-info" style="margin-top:4px;">
+                Spin the fortune wheel to win free real API credits. Only $10 and $5 win cash, other slots are No Prize. 3 daily spins.
+              </p>
+            </div>
+            <div class="wheel-odds-badge">
+              <span>Jackpot $10.00: <strong>0.1%</strong></span>
+              <span>Prize $5.00: <strong>1.0%</strong></span>
+              <span id="daily-spins-badge" style="background:rgba(91,252,196,0.12); border-color:rgba(91,252,196,0.4); color:var(--spacious-mint);">Daily Spins Left: <strong id="spins-left-counter">3 / 3</strong></span>
+            </div>
+          </div>
+
+          <div class="wheel-stage-wrapper">
+            <!-- Center Box for Perfect Responsive Alignment -->
+            <div class="wheel-stage-center-box">
+              <!-- Ticker Indicator Needle at Top -->
+              <div class="wheel-ticker" id="wheel-ticker">
+                <svg width="34" height="42" viewBox="0 0 34 42" fill="none">
+                  <path d="M17 40L2 8C0.5 5 2.5 1 6 1H28C31.5 1 33.5 5 32 8L17 40Z" fill="#ffdd00" stroke="#fff" stroke-width="2" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.6))"/>
+                  <circle cx="17" cy="10" r="5" fill="#e74c3c" stroke="#fff" stroke-width="1.5"/>
+                </svg>
+              </div>
+
+              <!-- Rotating Wheel Container -->
+              <div class="wheel-outer-ring">
+                <div class="wheel-canvas-container" id="wheel-canvas-container">
+                  <canvas id="wheelCanvas" width="380" height="380"></canvas>
+                </div>
+                <!-- Center Spin Hub Button -->
+                <button class="wheel-center-hub" id="btn-spin-wheel" title="Click to Spin!">
+                  <span class="hub-spin-text">SPIN</span>
+                  <span class="hub-sub-text">WIN $10</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Controls & Result Panel -->
+            <div class="wheel-info-panel">
+              <div class="spin-result-box" id="spin-result-display">
+                <span class="spin-status-label">LUCKY WHEEL STATUS</span>
+                <p class="spin-status-title" id="spin-status-text">Ready to Spin!</p>
+                <span class="spin-status-desc" id="spin-status-sub">You have 3 free spins today. Click SPIN to play.</span>
+              </div>
+
+              <div class="prizes-table-box">
+                <span style="font-size:0.8rem; font-weight:700; color:#fff; display:block; margin-bottom:8px;">Prizes & Probabilities:</span>
+                <div class="prizes-list-grid">
+                  <div class="prize-pill jackpot"><span class="prize-amt">$10.00 Jackpot</span><span class="prize-prob">0.1%</span></div>
+                  <div class="prize-pill bigwin"><span class="prize-amt">$5.00 Prize</span><span class="prize-prob">1.0%</span></div>
+                  <div class="prize-pill retry"><span class="prize-amt">No Prize</span><span class="prize-prob">24.7%</span></div>
+                  <div class="prize-pill retry"><span class="prize-amt">No Prize</span><span class="prize-prob">24.7%</span></div>
+                  <div class="prize-pill retry"><span class="prize-amt">No Prize</span><span class="prize-prob">24.7%</span></div>
+                  <div class="prize-pill retry"><span class="prize-amt">No Prize</span><span class="prize-prob">24.8%</span></div>
+                </div>
+              </div>
+
+              <button class="btn-primary btn-casino-spin" id="btn-spin-wheel-bottom">
+                SPIN FOR CREDITS (3 Spins Daily)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           9. VIEW: CREATORS & TEAM
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="content-view" id="view-team" style="display:none;">
+        <div class="view-header">
+          <div class="header-titles">
+            <h1 class="view-title">Creators & Core Team</h1>
+            <p class="view-subtitle">Meet the founder and architects behind the ForgeAPI developer platform.</p>
+          </div>
+        </div>
+
+        <div class="creators-layout-grid">
+          <!-- Authentic Discord Profile Card -->
+          <div class="discord-profile-card">
+            <div class="discord-banner-wrap">
+              <img src="assets/profile_banner.gif" alt="Banner" class="discord-banner-img">
+            </div>
+            <div class="discord-avatar-row">
+              <div class="discord-avatar-wrap">
+                <img src="assets/profile_avatar.jpg" alt="Sakura" class="discord-avatar-img">
+                <div class="discord-status-moon" title="Idle">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#f1c40f"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="discord-profile-body">
+              <div class="discord-names-wrap">
+                <div class="discord-display-name">Sakura</div>
+                <div class="discord-username-row">
+                  <span class="discord-username">king074035</span>
+                  <div class="discord-badges-row">
+                    <span class="discord-badge" title="Server Booster"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f525.png" width="16" height="16" alt="Booster"></span>
+                    <span class="discord-badge" title="HypeSquad / Nitro"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f53a.png" width="16" height="16" alt="Nitro"></span>
+                    <span class="discord-badge" title="Active Developer"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fa90.png" width="16" height="16" alt="Dev"></span>
+                    <span class="discord-badge" title="Early Supporter"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f343.png" width="16" height="16" alt="Supporter"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="discord-inner-card">
+                <div class="discord-section-header">About Me</div>
+                <p class="discord-bio-text">
+                  builder and enginer
+                </p>
+
+                <div class="discord-section-header" style="margin-top:14px;">Roles</div>
+                <div class="discord-roles-wrap">
+                  <span class="discord-role-pill"><span class="role-dot" style="background:#5bfcc4;"></span> Owner</span>
+                </div>
+
+                <div class="discord-section-header" style="margin-top:14px;">Member Since</div>
+                <div class="discord-date-text">Discord: Dec 14, 2020 • ForgeAPI: Aug 2026</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- From Uiverse.io by anand_4957 --> 
+          <div class="card speeder-card-wrapper">
+            <div class="speeder-container">
+              <div class="loader">
+                <span><span></span><span></span><span></span><span></span></span>
+                <div class="base">
+                  <span></span>
+                  <div class="face"></div>
+                </div>
+              </div>
+              <div class="longfazers">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ====================================================================
+       MODALS
+       ==================================================================== -->
+  <!-- Discord Creator Profile Popout Modal -->
+  <div class="modal-backdrop" id="modal-discord-profile" style="display:none;">
+    <div class="discord-profile-card modal-discord-dialog">
+      <button class="btn-discord-modal-close" id="btn-close-discord-modal">&times;</button>
+      <div class="discord-banner-wrap">
+        <img src="assets/profile_banner.gif" alt="Banner" class="discord-banner-img">
+      </div>
+      <div class="discord-avatar-row">
+        <div class="discord-avatar-wrap">
+          <img src="assets/profile_avatar.jpg" alt="Sakura" class="discord-avatar-img">
+          <div class="discord-status-moon" title="Idle">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#f1c40f"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="discord-profile-body">
+        <div class="discord-names-wrap">
+          <div class="discord-display-name">Sakura</div>
+          <div class="discord-username-row">
+            <span class="discord-username">king074035</span>
+            <div class="discord-badges-row">
+              <span class="discord-badge" title="Server Booster"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f525.png" width="16" height="16" alt="Booster"></span>
+              <span class="discord-badge" title="HypeSquad / Nitro"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f53a.png" width="16" height="16" alt="Nitro"></span>
+              <span class="discord-badge" title="Active Developer"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1fa90.png" width="16" height="16" alt="Dev"></span>
+              <span class="discord-badge" title="Early Supporter"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f343.png" width="16" height="16" alt="Supporter"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="discord-inner-card">
+          <div class="discord-section-header">About Me</div>
+          <p class="discord-bio-text">
+            builder and enginer
+          </p>
+
+          <div class="discord-section-header" style="margin-top:14px;">Roles</div>
+          <div class="discord-roles-wrap">
+            <span class="discord-role-pill"><span class="role-dot" style="background:#5bfcc4;"></span> Owner</span>
+          </div>
+
+          <div class="discord-section-header" style="margin-top:14px;">Member Since</div>
+          <div class="discord-date-text">Discord: Dec 14, 2020 • ForgeAPI: Aug 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Key Modal -->
+  <div class="modal-backdrop" id="modal-create-key" style="display:none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Create API key</h3>
+        <button class="btn-modal-close" id="btn-close-key-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="field-label">Key Name</label>
+          <input type="text" class="control-input" id="input-new-key-name" value="Production Application Key" placeholder="e.g. Production Backend">
+        </div>
+        <div class="form-group">
+          <label class="field-label">Allowed Model Routing</label>
+          <select class="control-select full-width" id="select-new-key-model">
+            <option value="all">All Models (Full Access - Claude Opus 5, Claude 4.8, GPT-5.6-Sol)</option>
+            <option value="claude-opus-5">Claude Opus 5 Only</option>
+            <option value="gpt-5.6-sol">GPT-5.6-Sol Only</option>
+            <option value="claude-opus-4-8">Claude Opus 4.8 Only</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="btn-cancel-key-modal">Cancel</button>
+        <button class="btn-primary" id="btn-confirm-create-key">Create secret key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Credits Modal -->
+  <div class="modal-backdrop" id="modal-add-credits" style="display:none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Credits & Plans</h3>
+        <button class="btn-modal-close" id="btn-close-credits-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          To buy credits or subscribe to a plan (<strong>€5</strong>, <strong>€17</strong>, max <strong>€20</strong>), contact the Owner on our official Discord server.
+        </p>
+        
+        <div class="credit-package-grid">
+          <button class="btn-credit-choice active" data-amount="5">€5</button>
+          <button class="btn-credit-choice" data-amount="10">€10</button>
+          <button class="btn-credit-choice" data-amount="17">€17</button>
+          <button class="btn-credit-choice" data-amount="20">€20</button>
+        </div>
+
+        <div style="margin-top: 18px; padding: 12px; background: rgba(91, 252, 196, 0.08); border: 1px solid rgba(91, 252, 196, 0.25); border-radius: var(--radius-sm); text-align: center;">
+          <span style="font-size: 0.8rem; color: #fff; font-weight: 600; display: block; margin-bottom: 8px;">Official Discord Server:</span>
+          <a href="https://discord.gg/zbeZ3zh4z" target="_blank" rel="noopener noreferrer" style="color: var(--spacious-mint); font-weight: 700; font-family: var(--font-mono); font-size: 0.86rem; word-break: break-all;">https://discord.gg/zbeZ3zh4z</a>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; flex-direction:column; gap:8px;">
+        <a href="https://discord.gg/zbeZ3zh4z" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; width:100%; text-align:center; padding:12px;">
+          Open Discord Ticket to Purchase
+        </a>
+        <button class="btn-secondary" id="btn-cancel-credits-modal" style="width:100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-notification" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

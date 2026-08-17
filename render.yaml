@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: apiforge-gateway
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: "npm install --production"
+    startCommand: "node server.js"
+    envVars:
+      - key: NODE_ENV
+        value: production

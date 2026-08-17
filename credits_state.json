@@ -1,0 +1,32 @@
+{
+  "accounts": {
+    "APIFORGE-3152134": {
+      "id": "APIFORGE-3152134",
+      "balance": 0.97,
+      "usedThisMonth": 0.03,
+      "totalRequests": 2,
+      "totalTokens": 132,
+      "spend": 0.03,
+      "recentRequests": [
+        {
+          "id": "req_c87fwhtn",
+          "time": "Just now",
+          "model": "claude-opus-5",
+          "tokens": "62",
+          "latency": "7.41s",
+          "cost": "$0.02",
+          "status": "Success"
+        },
+        {
+          "id": "req_1kf5a1kp",
+          "time": "Just now",
+          "model": "gpt-5.6-sol",
+          "tokens": "70",
+          "latency": "1.14s",
+          "cost": "$0.01",
+          "status": "Success"
+        }
+      ]
+    }
+  }
+}
