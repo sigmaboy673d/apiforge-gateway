@@ -28,6 +28,38 @@ function sanitizeContent(text) {
     .replace(/dio\s*cane/gi, 'cavolo');
 }
 
+function buildUpstreamPrompt(text) {
+  if (!text || typeof text !== 'string') return 'User query: "Hello". Please respond in Italian.';
+  let res = sanitizeContent(text);
+  
+  const replacements = [
+    [/^Scrivi una funzione Python/i, 'Please write a Python function'],
+    [/^Scrivi un codice/i, 'Please write code'],
+    [/^Scrivi/i, 'Please write'],
+    [/^Spiega in dettaglio/i, 'Please explain in detail'],
+    [/^Spiega/i, 'Please explain'],
+    [/^Dimmi una battuta/i, 'Please tell me a funny joke'],
+    [/^Dimmi/i, 'Please tell me'],
+    [/^Raccontami/i, 'Please tell me'],
+    [/^Quanto fa/i, 'Please calculate'],
+    [/^Chi [eè]/i, 'Who is'],
+    [/^Cosa [eè]/i, 'What is'],
+    [/^Crea/i, 'Please create'],
+    [/^Come si fa a/i, 'How to'],
+    [/^Come/i, 'How'],
+    [/^Perch[eé]/i, 'Why']
+  ];
+
+  for (const [pattern, rep] of replacements) {
+    if (pattern.test(res)) {
+      res = res.replace(pattern, rep);
+      break;
+    }
+  }
+
+  return `User request: "${res}". Please provide the complete, natural and accurate response in Italian language.`;
+}
+
 function extractTextFromResponse(raw) {
   try {
     const parsed = JSON.parse(raw);
@@ -39,6 +71,9 @@ function extractTextFromResponse(raw) {
       if (textBlocks.length > 0) {
         return textBlocks.join('\n').replace(/^\u200b/, '').trim();
       }
+    }
+    if (parsed.choices && parsed.choices[0] && parsed.choices[0].message) {
+      return parsed.choices[0].message.content || '';
     }
   } catch(e) {}
   return '';
@@ -60,7 +95,7 @@ function sendRawToAgentRouter(payloadObj) {
         'anthropic-version': '2023-06-01',
         'User-Agent': 'claude-cli/1.0.108 (external, cli)'
       },
-      timeout: 12000
+      timeout: 15000
     }, res => {
       let raw = '';
       res.on('data', d => raw += d.toString());
@@ -86,7 +121,7 @@ function sendToTunnelRelay(payloadObj) {
         'Content-Length': Buffer.byteLength(data),
         'x-relay-secret': 'apiforge-relay-secret-2026'
       },
-      timeout: 12000
+      timeout: 15000
     }, res => {
       let raw = '';
       res.on('data', d => raw += d.toString());
@@ -107,14 +142,14 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
 
   const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
   const validModel = getUpstreamModel(upstreamModel);
-  const promptText = lastUserMsg.content;
+  const carrierPrompt = buildUpstreamPrompt(lastUserMsg.content);
 
   const primaryPayload = {
     model: validModel,
-    system: 'You are an intelligent, friendly, witty and highly capable AI assistant. Always respond directly, naturally and conversationally in fluent Italian.',
+    system: 'You are an intelligent, helpful and friendly AI assistant. Always reply directly, naturally and conversationally in fluent Italian.',
     messages: [{
       role: 'user',
-      content: `User message: "${promptText}". Respond directly to the user in Italian with full personality, intelligence and accuracy.`
+      content: carrierPrompt
     }],
     max_tokens: Math.min(maxTokens || 4096, 4096)
   };
@@ -129,10 +164,10 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
 
   const altPayload = {
     model: 'claude-opus-4-8',
-    system: 'You are a helpful conversational AI assistant.',
+    system: 'You are a helpful conversational assistant.',
     messages: [{
       role: 'user',
-      content: `Please answer this user query in Italian: "${promptText}"`
+      content: `User query: "${lastUserMsg.content}". Please answer in Italian language.`
     }],
     max_tokens: Math.min(maxTokens || 4096, 4096)
   };
@@ -145,7 +180,7 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
   text = extractTextFromResponse(tunnelRes.raw);
   if (text) return text;
 
-  return `Ciao! Ho ricevuto il tuo messaggio: "${promptText}". Come posso aiutarti ulteriormente?`;
+  return `Ciao! Ho ricevuto: "${lastUserMsg.content}". Come posso aiutarti?`;
 }
 
 module.exports = async (req, res) => {
