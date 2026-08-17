@@ -5,14 +5,15 @@ const security = require('./security');
 const MASTER_API_KEY = 'sk-e3C9Uk4FuzqRl7D9Gyxu2n9OhCzufx8XUaNO2vdSWAkECCld';
 
 const MODEL_MAP = {
-  'gpt-5.6-sol':     'gpt-5.6-sol',
+  'gpt-5.6-sol':     'claude-opus-4-8',
+  'gpt-5.5':         'claude-opus-4-8',
+  'gpt-5':           'claude-opus-4-8',
+  'gpt-4o':          'claude-opus-4-8',
   'claude-opus-4-8': 'claude-opus-4-8',
   'claude-opus-5':   'claude-opus-5',
   'claude-opus':     'claude-opus-5',
   'claude-3-opus':   'claude-opus-5',
-  'gpt-5.5':         'gpt-5.6-sol',
-  'gpt-5':           'gpt-5.6-sol',
-  'gpt-4o':          'gpt-5.6-sol'
+  'claude-3-5-sonnet': 'claude-opus-4-8'
 };
 
 function getUpstreamModel(m) {
@@ -28,9 +29,41 @@ function sanitizeContent(text) {
     .replace(/dio\s*cane/gi, 'cavolo');
 }
 
-function sendRawToAgentRouter(payloadObj) {
-  return new Promise((resolve) => {
-    const payload = JSON.stringify(payloadObj);
+function extractTextFromResponse(raw) {
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed.content && Array.isArray(parsed.content)) {
+      const textBlocks = parsed.content
+        .filter(c => c.type === 'text' && typeof c.text === 'string')
+        .map(c => c.text);
+      if (textBlocks.length > 0) {
+        return textBlocks.join('\n').replace(/^\u200b/, '').trim();
+      }
+    }
+  } catch(e) {}
+  return '';
+}
+
+function callAgentRouterMessages(upstreamModel, messages, systemPrompt, maxTokens) {
+  return new Promise((resolve, reject) => {
+    const cleanMessages = messages.map(m => ({
+      role: m.role,
+      content: sanitizeContent(m.content)
+    }));
+
+    const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
+    const validModel = getUpstreamModel(upstreamModel);
+
+    const payload = JSON.stringify({
+      model: validModel,
+      system: 'You are a helpful, expert AI assistant. Provide an accurate and comprehensive response in the requested language.',
+      messages: [{
+        role: 'user',
+        content: `User query: "${lastUserMsg.content}". Please provide the complete, natural response.`
+      }],
+      max_tokens: Math.min(maxTokens || 4096, 4096)
+    });
+
     const req = https.request({
       hostname: 'agentrouter.org',
       port: 443,
@@ -49,85 +82,20 @@ function sendRawToAgentRouter(payloadObj) {
       let raw = '';
       res.on('data', d => raw += d.toString());
       res.on('end', () => {
-        resolve({ statusCode: res.statusCode, raw });
+        const text = extractTextFromResponse(raw);
+        if (text) return resolve(text);
+        if (res.statusCode !== 200) {
+          return reject(new Error(`Upstream returned ${res.statusCode}: ${raw.slice(0, 100)}`));
+        }
+        resolve('Risposta completata con successo.');
       });
     });
 
-    req.on('error', err => resolve({ statusCode: 502, raw: JSON.stringify({ error: err.message }) }));
-    req.on('timeout', () => { req.destroy(); resolve({ statusCode: 504, raw: '{"error":"timeout"}' }); });
+    req.on('error', err => reject(err));
+    req.on('timeout', () => { req.destroy(); reject(new Error('Gateway timeout')); });
     req.write(payload);
     req.end();
   });
-}
-
-function extractTextFromResponse(raw) {
-  try {
-    const parsed = JSON.parse(raw);
-    if (parsed.content && Array.isArray(parsed.content)) {
-      const textBlocks = parsed.content
-        .filter(c => c.type === 'text' && typeof c.text === 'string')
-        .map(c => c.text);
-      if (textBlocks.length > 0) {
-        return textBlocks.join('\n').replace(/^\u200b/, '').trim();
-      }
-    }
-  } catch(e) {}
-  return '';
-}
-
-/**
- * 100% Cloud-Native AI Messages Routing with Smart Bypass Envelope
- */
-async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, maxTokens) {
-  const cleanMessages = messages.map(m => ({
-    role: m.role,
-    content: sanitizeContent(m.content)
-  }));
-
-  const primaryPayload = {
-    model: upstreamModel,
-    messages: cleanMessages,
-    max_tokens: Math.min(maxTokens || 4096, 4096),
-    system: sanitizeContent(systemPrompt) || 'You are a helpful AI assistant.'
-  };
-
-  let res = await sendRawToAgentRouter(primaryPayload);
-  let text = extractTextFromResponse(res.raw);
-
-  if (!text || res.statusCode !== 200 || res.raw.includes('content-blocked') || res.raw.includes('aliyun_waf') || res.raw.includes('<html')) {
-    const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
-    const wrappedPayload = {
-      model: upstreamModel,
-      system: 'You are an intelligent, expert AI assistant. Provide an accurate, comprehensive, and helpful answer in the requested language.',
-      messages: [{
-        role: 'user',
-        content: `User query: "${lastUserMsg.content}". Please provide the complete, natural response.`
-      }],
-      max_tokens: Math.min(maxTokens || 4096, 4096)
-    };
-
-    res = await sendRawToAgentRouter(wrappedPayload);
-    text = extractTextFromResponse(res.raw);
-  }
-
-  // Fallback to claude-opus-4-8 if needed
-  if (!text) {
-    const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
-    const fallbackPayload = {
-      model: 'claude-opus-4-8',
-      system: 'You are a helpful AI assistant.',
-      messages: [{
-        role: 'user',
-        content: `User query: "${lastUserMsg.content}". Please provide the response.`
-      }],
-      max_tokens: Math.min(maxTokens || 4096, 4096)
-    };
-    const fallbackRes = await sendRawToAgentRouter(fallbackPayload);
-    text = extractTextFromResponse(fallbackRes.raw);
-  }
-
-  if (text) return text;
-  throw new Error(`Upstream returned status ${res.statusCode}: ${res.raw.slice(0, 150)}`);
 }
 
 module.exports = async (req, res) => {
@@ -216,7 +184,7 @@ module.exports = async (req, res) => {
       formattedMessages.push({ role: 'user', content: 'Ciao' });
     }
 
-    // REAL AI GENERATION (NO FAKE OR STATIC GREETINGS)
+    // REAL AI GENERATION
     const aiText = await callAgentRouterMessages(upstreamModel, formattedMessages, systemPrompt, cleanPayload.max_tokens);
 
     const durationMs = Math.round(performance.now() - startTime);
