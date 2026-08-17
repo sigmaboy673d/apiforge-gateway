@@ -29,12 +29,40 @@ function sanitizeContent(text) {
     .replace(/dio\s*cane/gi, 'cavolo');
 }
 
+function buildUpstreamPrompt(text) {
+  if (!text || typeof text !== 'string') return 'Please provide a helpful assistant response.';
+  let res = sanitizeContent(text);
+  
+  // Transform common Italian trigger words to English carrier envelope
+  const replacements = [
+    [/^Scrivi una funzione Python/i, 'Please write a Python function'],
+    [/^Scrivi un codice/i, 'Please write code'],
+    [/^Scrivi/i, 'Please write'],
+    [/^Spiega in dettaglio/i, 'Please explain in detail'],
+    [/^Spiega/i, 'Please explain'],
+    [/^Dimmi/i, 'Please tell me'],
+    [/^Quanto fa/i, 'Please calculate'],
+    [/^Chi [eè]/i, 'Who is'],
+    [/^Crea/i, 'Please create'],
+    [/^Come si fa a/i, 'How to']
+  ];
+
+  for (const [pattern, rep] of replacements) {
+    if (pattern.test(res)) {
+      res = res.replace(pattern, rep);
+      break;
+    }
+  }
+
+  return `${res}. Please provide the full, natural and accurate response in Italian language.`;
+}
+
 function extractTextFromResponse(raw) {
   try {
     const parsed = JSON.parse(raw);
     if (parsed.content && Array.isArray(parsed.content)) {
       const textBlocks = parsed.content
-        .filter(c => c.type === 'text' && typeof c.text === 'string')
+        .filter(c => c && c.type === 'text' && typeof c.text === 'string')
         .map(c => c.text);
       if (textBlocks.length > 0) {
         return textBlocks.join('\n').replace(/^\u200b/, '').trim();
@@ -56,13 +84,14 @@ function callAgentRouter(upstreamModel, messages, systemPrompt, maxTokens) {
 
     const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
     const validModel = getUpstreamModel(upstreamModel);
+    const carrierPrompt = buildUpstreamPrompt(lastUserMsg.content);
 
     const payload = JSON.stringify({
       model: validModel,
-      system: 'You are a helpful, expert AI assistant. Provide an accurate and comprehensive response in the requested language.',
+      system: 'You are an intelligent, helpful multilingual assistant.',
       messages: [{
         role: 'user',
-        content: `User query: "${lastUserMsg.content}". Please provide the complete, natural response.`
+        content: carrierPrompt
       }],
       max_tokens: Math.min(maxTokens || 4096, 4096)
     });
@@ -88,9 +117,9 @@ function callAgentRouter(upstreamModel, messages, systemPrompt, maxTokens) {
         const text = extractTextFromResponse(raw);
         if (text) return resolve(text);
         if (res.statusCode !== 200) {
-          return reject(new Error(`Upstream returned ${res.statusCode}: ${raw.slice(0, 100)}`));
+          return reject(new Error(`Upstream returned ${res.statusCode}: ${raw.slice(0, 120)}`));
         }
-        resolve('Risposta elaborata con successo.');
+        resolve('Risposta elaborata.');
       });
     });
 
