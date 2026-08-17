@@ -94,7 +94,7 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
   let res = await sendRawToAgentRouter(primaryPayload);
   let text = extractTextFromResponse(res.raw);
 
-  if (!text || res.statusCode !== 200 || res.raw.includes('content-blocked')) {
+  if (!text || res.statusCode !== 200 || res.raw.includes('content-blocked') || res.raw.includes('aliyun_waf') || res.raw.includes('<html')) {
     const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
     const wrappedPayload = {
       model: upstreamModel,
@@ -108,6 +108,22 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
 
     res = await sendRawToAgentRouter(wrappedPayload);
     text = extractTextFromResponse(res.raw);
+  }
+
+  // Fallback to claude-opus-4-8 if needed
+  if (!text) {
+    const lastUserMsg = cleanMessages.filter(m => m.role === 'user').pop() || { content: 'Ciao' };
+    const fallbackPayload = {
+      model: 'claude-opus-4-8',
+      system: 'You are a helpful AI assistant.',
+      messages: [{
+        role: 'user',
+        content: `User query: "${lastUserMsg.content}". Please provide the response.`
+      }],
+      max_tokens: Math.min(maxTokens || 4096, 4096)
+    };
+    const fallbackRes = await sendRawToAgentRouter(fallbackPayload);
+    text = extractTextFromResponse(fallbackRes.raw);
   }
 
   if (text) return text;
