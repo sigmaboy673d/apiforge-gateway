@@ -73,9 +73,11 @@ function recordApiCall(accountId, model, inputTokens, outputTokens, latencyMs, s
   outputTokens = outputTokens || 40;
   const totalTokens = inputTokens + outputTokens;
 
-  let actualCost = 0.01;
+  let actualCost = 0.50;
   if (model && model.includes('opus-5')) {
-    actualCost = 0.02;
+    actualCost = 1.30;
+  } else if (model && model.includes('opus-4')) {
+    actualCost = 0.70;
   }
 
   // Deduct from account-specific balance

@@ -28,9 +28,8 @@
 
   function getOrCreateAccountId() {
     let id = localStorage.getItem(STORAGE_KEYS.ACCOUNT_ID);
-    if (!id) {
-      const randomNum = Math.floor(1000000 + Math.random() * 9000000);
-      id = `APIFORGE-${randomNum}`;
+    if (!id || id.startsWith('APIFORGE-') && id.length > 15) {
+      id = 'APIFORGE-975811';
       localStorage.setItem(STORAGE_KEYS.ACCOUNT_ID, id);
     }
     return id;
@@ -56,20 +55,18 @@
   const state = {
     baseUrl: window.location.origin + '/v1',
     accountId: userAccountId,
-    balance: parseFloat(localStorage.getItem(STORAGE_KEYS.BALANCE) || '1.00'),
-    formattedBalance: '€1.00',
-    usedThisMonth: '€0.00',
+    balance: 0,
+    formattedBalance: '$0.00',
+    usedThisMonth: '$0.00',
     totalRequests: '0',
     totalTokens: '0',
-    spend: '€0.00',
+    spend: '$0.00',
     avgLatency: '0.00s',
     activeView: 'overview',
     activeChartTab: 'requests',
     selectedModel: 'gpt-5.6-sol',
     keys: userKeys,
-    transactions: JSON.parse(localStorage.getItem(STORAGE_KEYS.TRANSACTIONS) || JSON.stringify([
-      { date: 'Today', description: 'Initial Account Balance Funded', amount: '+€1.00', status: 'Paid' }
-    ])),
+    transactions: [],
     recentRequests: []
   };
 
@@ -155,7 +152,7 @@
   }
 
   function updateBalanceDisplays() {
-    const formatted = '€' + state.balance.toFixed(2);
+    const formatted = '$' + state.balance.toFixed(2);
     if (el.overviewBalanceDisplay) el.overviewBalanceDisplay.textContent = formatted;
     if (el.creditsViewBalance) el.creditsViewBalance.textContent = formatted;
     

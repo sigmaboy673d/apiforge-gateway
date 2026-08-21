@@ -5,18 +5,18 @@ const security = require('./security');
 const MASTER_API_KEY = 'sk-e3C9Uk4FuzqRl7D9Gyxu2n9OhCzufx8XUaNO2vdSWAkECCld';
 
 const MODEL_MAP = {
-  'gpt-5.6-sol':     'claude-opus-4-8',
-  'gpt-5.5':         'claude-opus-4-8',
-  'gpt-5':           'claude-opus-4-8',
-  'claude-opus-4-8': 'claude-opus-4-8',
+  'gpt-5.6-sol':     'claude-opus-5',
+  'gpt-5.5':         'claude-opus-5',
+  'gpt-5':           'claude-opus-5',
   'claude-opus-5':   'claude-opus-5',
+  'claude-opus-4-8': 'claude-opus-5',
   'claude-opus':     'claude-opus-5',
   'claude-3-opus':   'claude-opus-5',
-  'claude-3-5-sonnet': 'claude-opus-4-8'
+  'claude-3-5-sonnet': 'claude-opus-5'
 };
 
 function getUpstreamModel(requested) {
-  return MODEL_MAP[requested] || 'claude-opus-4-8';
+  return MODEL_MAP[requested] || 'claude-opus-5';
 }
 
 function sanitizeContent(text) {
@@ -95,33 +95,7 @@ function sendRawToAgentRouter(payloadObj) {
         'anthropic-version': '2023-06-01',
         'User-Agent': 'claude-cli/1.0.108 (external, cli)'
       },
-      timeout: 15000
-    }, res => {
-      let raw = '';
-      res.on('data', d => raw += d.toString());
-      res.on('end', () => resolve({ statusCode: res.statusCode, raw }));
-    });
-    req.on('error', () => resolve({ statusCode: 502, raw: '' }));
-    req.on('timeout', () => { req.destroy(); resolve({ statusCode: 504, raw: '' }); });
-    req.write(data);
-    req.end();
-  });
-}
-
-function sendToTunnelRelay(payloadObj) {
-  return new Promise((resolve) => {
-    const data = JSON.stringify(payloadObj);
-    const req = https.request({
-      hostname: 'satisfied-common-dispatch-capital.trycloudflare.com',
-      port: 443,
-      path: '/relay',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(data),
-        'x-relay-secret': 'apiforge-relay-secret-2026'
-      },
-      timeout: 15000
+      timeout: 25000
     }, res => {
       let raw = '';
       res.on('data', d => raw += d.toString());
@@ -146,7 +120,7 @@ async function callAgentRouter(upstreamModel, messages, systemPrompt, maxTokens)
 
   const primaryPayload = {
     model: validModel,
-    system: 'You are an intelligent, helpful and friendly AI assistant. Always reply directly, naturally and conversationally in fluent Italian.',
+    system: 'You are an intelligent, helpful, witty and highly capable AI assistant. Always respond directly, naturally and conversationally in fluent Italian.',
     messages: [{
       role: 'user',
       content: carrierPrompt
@@ -158,17 +132,13 @@ async function callAgentRouter(upstreamModel, messages, systemPrompt, maxTokens)
   let text = extractTextFromResponse(res.raw);
   if (text) return text;
 
-  let tunnelRes = await sendToTunnelRelay(primaryPayload);
-  text = extractTextFromResponse(tunnelRes.raw);
-  if (text) return text;
-
-  // Retry with claude-opus-4-8 carrier
+  // Fallback with direct query prompt on claude-opus-5
   const altPayload = {
-    model: 'claude-opus-4-8',
-    system: 'You are a helpful conversational assistant.',
+    model: 'claude-opus-5',
+    system: 'You are a helpful AI assistant.',
     messages: [{
       role: 'user',
-      content: `User query: "${lastUserMsg.content}". Please answer in Italian language.`
+      content: `Please answer in Italian: ${lastUserMsg.content}`
     }],
     max_tokens: Math.min(maxTokens || 4096, 4096)
   };
@@ -177,11 +147,19 @@ async function callAgentRouter(upstreamModel, messages, systemPrompt, maxTokens)
   text = extractTextFromResponse(res.raw);
   if (text) return text;
 
-  tunnelRes = await sendToTunnelRelay(altPayload);
-  text = extractTextFromResponse(tunnelRes.raw);
+  // Secondary fallback
+  const rawPayload = {
+    model: 'claude-opus-5',
+    system: 'You are a helpful AI assistant.',
+    messages: cleanMessages,
+    max_tokens: Math.min(maxTokens || 4096, 4096)
+  };
+
+  res = await sendRawToAgentRouter(rawPayload);
+  text = extractTextFromResponse(res.raw);
   if (text) return text;
 
-  return `Ciao! Ho ricevuto: "${lastUserMsg.content}". Come posso aiutarti?`;
+  throw new Error('Upstream AI generation temporarily busy. Please try again.');
 }
 
 module.exports = async (req, res) => {

@@ -568,16 +568,35 @@
   </audio>
 
   <script>
-    // State
+    // State — uses real Forge Wallet account
     const state = {
-      apiKey: localStorage.getItem('apiforge_live_key') || 'fg_live_' + Math.random().toString(36).slice(2, 12),
-      accountId: localStorage.getItem('apiforge_account_id') || 'APIFORGE-' + Math.floor(1000000 + Math.random() * 9000000),
+      apiKey: localStorage.getItem('apiforge_live_key') || '',
+      accountId: localStorage.getItem('apiforge_account_id') || 'APIFORGE-975811',
       messages: [],
-      isGenerating: false
+      isGenerating: false,
+      balance: 0
     };
 
     localStorage.setItem('apiforge_live_key', state.apiKey);
     localStorage.setItem('apiforge_account_id', state.accountId);
+
+    // Fetch unique per-user API key from server (stable per account)
+    (async () => {
+      try {
+        const keyRes = await fetch('/api/keys', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-user-id': state.accountId },
+          body: JSON.stringify({ accountId: state.accountId })
+        });
+        if (keyRes.ok) {
+          const keyData = await keyRes.json();
+          if (keyData.apiKey) {
+            state.apiKey = keyData.apiKey;
+            localStorage.setItem('apiforge_live_key', state.apiKey);
+          }
+        }
+      } catch (e) {}
+    })();
 
     const messagesContainer = document.getElementById('chat-messages-container');
     const chatInput = document.getElementById('chat-input');

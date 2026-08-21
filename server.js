@@ -11,6 +11,7 @@ const testUpstreamHandler = require('./api/test_upstream');
 const userHandler = require('./api/user');
 const creditsHandler = require('./api/credits');
 const overviewHandler = require('./api/overview');
+const state = require('./api/state');
 
 const PORT = process.env.PORT || 3456;
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -119,6 +120,20 @@ const server = http.createServer(async (req, res) => {
   if (url === '/api/credits') {
     req.body = await getParsedBody();
     await creditsHandler(req, res);
+    return;
+  }
+
+  if (url === '/api/balance') {
+    const accountId = req.headers['x-user-id'] || 'APIFORGE-3152134';
+    const account = state.getAccount(accountId);
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.end(JSON.stringify({
+      accountId: account.id,
+      balance: account.balance,
+      formatted: '$' + account.balance.toFixed(2),
+      spend: '$' + (account.spend || 0).toFixed(2),
+      totalRequests: account.totalRequests || 0
+    }));
     return;
   }
 
