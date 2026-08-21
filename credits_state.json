@@ -2,140 +2,56 @@
   "accounts": {
     "APIFORGE-3152134": {
       "id": "APIFORGE-3152134",
-      "balance": 0,
-      "usedThisMonth": 1.04,
-      "totalRequests": 5,
-      "totalTokens": 420,
-      "spend": 1.04,
-      "recentRequests": [
-        {
-          "id": "req_713faopr",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "121",
-          "latency": "9.29s",
-          "cost": "$0.50",
-          "status": "Success"
-        },
-        {
-          "id": "req_15fjwj5y",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "115",
-          "latency": "5.87s",
-          "cost": "$0.50",
-          "status": "Success"
-        },
-        {
-          "id": "req_ohd2tbpr",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "52",
-          "latency": "4.35s",
-          "cost": "$0.01",
-          "status": "Success"
-        },
-        {
-          "id": "req_c87fwhtn",
-          "time": "Just now",
-          "model": "claude-opus-5",
-          "tokens": "62",
-          "latency": "7.41s",
-          "cost": "$0.02",
-          "status": "Success"
-        },
-        {
-          "id": "req_1kf5a1kp",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "70",
-          "latency": "1.14s",
-          "cost": "$0.01",
-          "status": "Success"
-        }
-      ]
+      "balance": 61.0,
+      "usedThisMonth": 0.0,
+      "totalRequests": 0,
+      "totalTokens": 0,
+      "spend": 0.0,
+      "recentRequests": []
     },
     "APIFORGE-2397870": {
       "id": "APIFORGE-2397870",
-      "balance": 0.47,
-      "usedThisMonth": 0.53,
-      "totalRequests": 4,
-      "totalTokens": 334,
-      "spend": 0.53,
-      "recentRequests": [
-        {
-          "id": "req_3z88e2iq",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "43",
-          "latency": "3.92s",
-          "cost": "$0.50",
-          "status": "Success"
-        },
-        {
-          "id": "req_md9fq55d",
-          "time": "Just now",
-          "model": "claude-opus-4-8",
-          "tokens": "217",
-          "latency": "30.20s",
-          "cost": "$0.01",
-          "status": "Success"
-        },
-        {
-          "id": "req_i9gbpi2p",
-          "time": "Just now",
-          "model": "claude-opus-4-8",
-          "tokens": "56",
-          "latency": "4.58s",
-          "cost": "$0.01",
-          "status": "Success"
-        },
-        {
-          "id": "req_d2fhhf2b",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "18",
-          "latency": "3.80s",
-          "cost": "$0.01",
-          "status": "Success"
-        }
-      ]
+      "balance": 61.0,
+      "usedThisMonth": 0.0,
+      "totalRequests": 0,
+      "totalTokens": 0,
+      "spend": 0.0,
+      "recentRequests": []
     },
     "APIFORGE-975811": {
       "id": "APIFORGE-975811",
-      "balance": 60.99,
-      "usedThisMonth": 0.01,
-      "totalRequests": 1,
-      "totalTokens": 19,
-      "spend": 0.01,
-      "recentRequests": [
-        {
-          "id": "req_ruvbcltl",
-          "time": "Just now",
-          "model": "gpt-5.6-sol",
-          "tokens": "19",
-          "latency": "3.42s",
-          "cost": "$0.01",
-          "status": "Success"
-        }
-      ]
+      "balance": 61.0,
+      "usedThisMonth": 0.0,
+      "totalRequests": 0,
+      "totalTokens": 0,
+      "spend": 0.0,
+      "recentRequests": []
     },
     "APIFORGE-2269020": {
       "id": "APIFORGE-2269020",
-      "balance": 61,
-      "usedThisMonth": 0,
+      "balance": 61.0,
+      "usedThisMonth": 0.0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0,
+      "spend": 0.0,
       "recentRequests": []
     },
     "APIFORGE-9705811": {
       "id": "APIFORGE-9705811",
-      "balance": 61,
-      "usedThisMonth": 0,
+      "balance": 61.0,
+      "usedThisMonth": 0.0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0,
+      "spend": 0.0,
+      "recentRequests": []
+    },
+    "default_user": {
+      "id": "default_user",
+      "balance": 61.0,
+      "usedThisMonth": 0.0,
+      "totalRequests": 0,
+      "totalTokens": 0,
+      "spend": 0.0,
       "recentRequests": []
     }
   }
