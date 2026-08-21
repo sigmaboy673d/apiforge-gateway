@@ -2,12 +2,30 @@
   "accounts": {
     "APIFORGE-3152134": {
       "id": "APIFORGE-3152134",
-      "balance": 0.96,
-      "usedThisMonth": 0.04,
-      "totalRequests": 3,
-      "totalTokens": 184,
-      "spend": 0.04,
+      "balance": 0,
+      "usedThisMonth": 1.04,
+      "totalRequests": 5,
+      "totalTokens": 420,
+      "spend": 1.04,
       "recentRequests": [
+        {
+          "id": "req_713faopr",
+          "time": "Just now",
+          "model": "gpt-5.6-sol",
+          "tokens": "121",
+          "latency": "9.29s",
+          "cost": "$0.50",
+          "status": "Success"
+        },
+        {
+          "id": "req_15fjwj5y",
+          "time": "Just now",
+          "model": "gpt-5.6-sol",
+          "tokens": "115",
+          "latency": "5.87s",
+          "cost": "$0.50",
+          "status": "Success"
+        },
         {
           "id": "req_ohd2tbpr",
           "time": "Just now",
@@ -39,12 +57,21 @@
     },
     "APIFORGE-2397870": {
       "id": "APIFORGE-2397870",
-      "balance": 0.97,
-      "usedThisMonth": 0.03,
-      "totalRequests": 3,
-      "totalTokens": 291,
-      "spend": 0.03,
+      "balance": 0.47,
+      "usedThisMonth": 0.53,
+      "totalRequests": 4,
+      "totalTokens": 334,
+      "spend": 0.53,
       "recentRequests": [
+        {
+          "id": "req_3z88e2iq",
+          "time": "Just now",
+          "model": "gpt-5.6-sol",
+          "tokens": "43",
+          "latency": "3.92s",
+          "cost": "$0.50",
+          "status": "Success"
+        },
         {
           "id": "req_md9fq55d",
           "time": "Just now",

@@ -108,6 +108,32 @@ function sendRawToAgentRouter(payloadObj) {
   });
 }
 
+function sendToTunnelRelay(payloadObj) {
+  return new Promise((resolve) => {
+    const data = JSON.stringify(payloadObj);
+    const req = https.request({
+      hostname: 'inventory-sage-incoming-circuits.trycloudflare.com',
+      port: 443,
+      path: '/relay',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+        'x-relay-secret': 'apiforge-relay-secret-2026'
+      },
+      timeout: 25000
+    }, res => {
+      let raw = '';
+      res.on('data', d => raw += d.toString());
+      res.on('end', () => resolve({ statusCode: res.statusCode, raw }));
+    });
+    req.on('error', () => resolve({ statusCode: 502, raw: '' }));
+    req.on('timeout', () => { req.destroy(); resolve({ statusCode: 504, raw: '' }); });
+    req.write(data);
+    req.end();
+  });
+}
+
 async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, maxTokens) {
   const cleanMessages = messages.map(m => ({
     role: m.role,
@@ -132,6 +158,11 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
   let text = extractTextFromResponse(res.raw);
   if (text) return text;
 
+  // Residential Tunnel Relay
+  let tunnelRes = await sendToTunnelRelay(primaryPayload);
+  text = extractTextFromResponse(tunnelRes.raw);
+  if (text) return text;
+
   // Fallback with direct query prompt on claude-opus-5
   const altPayload = {
     model: 'claude-opus-5',
@@ -147,16 +178,8 @@ async function callAgentRouterMessages(upstreamModel, messages, systemPrompt, ma
   text = extractTextFromResponse(res.raw);
   if (text) return text;
 
-  // Secondary fallback
-  const rawPayload = {
-    model: 'claude-opus-5',
-    system: 'You are a helpful AI assistant.',
-    messages: cleanMessages,
-    max_tokens: Math.min(maxTokens || 4096, 4096)
-  };
-
-  res = await sendRawToAgentRouter(rawPayload);
-  text = extractTextFromResponse(res.raw);
+  tunnelRes = await sendToTunnelRelay(altPayload);
+  text = extractTextFromResponse(tunnelRes.raw);
   if (text) return text;
 
   throw new Error('Upstream AI generation temporarily busy. Please try again.');

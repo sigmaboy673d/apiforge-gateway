@@ -18,17 +18,16 @@ function timingSafeMatch(a, b) {
 }
 
 const MODEL_MAP = {
-  'gpt-5.6-sol':     'claude-opus-4-8',
-  'gpt-5.5':         'claude-opus-4-8',
-  'gpt-5':           'claude-opus-4-8',
-  'gpt-4o':          'claude-opus-4-8',
-  'claude-opus-4-8': 'claude-opus-4-8',
+  'gpt-5.6-sol':     'claude-opus-5',
+  'gpt-5.5':         'claude-opus-5',
+  'gpt-5':           'claude-opus-5',
   'claude-opus-5':   'claude-opus-5',
+  'claude-opus-4-8': 'claude-opus-5',
   'claude-opus':     'claude-opus-5',
   'claude-3-opus':   'claude-opus-5',
 };
 
-function getUpstreamModel(m) { return MODEL_MAP[m] || 'claude-opus-4-8'; }
+function getUpstreamModel(m) { return MODEL_MAP[m] || 'claude-opus-5'; }
 
 function sanitize(text) {
   if (typeof text !== 'string') return text;
