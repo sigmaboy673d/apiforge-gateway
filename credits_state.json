@@ -2,56 +2,56 @@
   "accounts": {
     "APIFORGE-3152134": {
       "id": "APIFORGE-3152134",
-      "balance": 61.0,
-      "usedThisMonth": 0.0,
+      "balance": 61,
+      "usedThisMonth": 0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0.0,
+      "spend": 0,
       "recentRequests": []
     },
     "APIFORGE-2397870": {
       "id": "APIFORGE-2397870",
-      "balance": 61.0,
-      "usedThisMonth": 0.0,
+      "balance": 61,
+      "usedThisMonth": 0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0.0,
+      "spend": 0,
       "recentRequests": []
     },
     "APIFORGE-975811": {
       "id": "APIFORGE-975811",
-      "balance": 61.0,
-      "usedThisMonth": 0.0,
+      "balance": 61,
+      "usedThisMonth": 0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0.0,
+      "spend": 0,
       "recentRequests": []
     },
     "APIFORGE-2269020": {
       "id": "APIFORGE-2269020",
-      "balance": 61.0,
-      "usedThisMonth": 0.0,
+      "balance": 61,
+      "usedThisMonth": 0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0.0,
+      "spend": 0,
       "recentRequests": []
     },
     "APIFORGE-9705811": {
       "id": "APIFORGE-9705811",
-      "balance": 61.0,
-      "usedThisMonth": 0.0,
+      "balance": 61,
+      "usedThisMonth": 0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0.0,
+      "spend": 0,
       "recentRequests": []
     },
     "default_user": {
       "id": "default_user",
-      "balance": 61.0,
-      "usedThisMonth": 0.0,
+      "balance": 61,
+      "usedThisMonth": 0,
       "totalRequests": 0,
       "totalTokens": 0,
-      "spend": 0.0,
+      "spend": 0,
       "recentRequests": []
     }
   }

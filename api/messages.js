@@ -112,7 +112,7 @@ function sendToTunnelRelay(payloadObj) {
   return new Promise((resolve) => {
     const data = JSON.stringify(payloadObj);
     const req = https.request({
-      hostname: 'inventory-sage-incoming-circuits.trycloudflare.com',
+      hostname: 'drives-albert-back-controlled.trycloudflare.com',
       port: 443,
       path: '/relay',
       method: 'POST',
